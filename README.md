@@ -43,7 +43,8 @@ portfolio/
 │   ├── ProjectModal.vue
 │   └── …
 ├── public/
-│   ├── XCResume2026.docx   # Resume (regenerate: npm run resume)
+│   ├── XCResume2026.pdf    # Resume download (visitors)
+│   ├── XCResume2026.docx   # Editable source (regenerate: npm run resume)
 │   └── images/projects/    # Thumbnails: {project-id}.jpg
 └── scripts/
     └── patch-nuxt-callhook.mjs
@@ -84,4 +85,4 @@ npm run build
 # Vercel: connect repo, Node 20, build command `npm run build`
 ```
 
-Resume lives at **`public/XCResume2026.docx`**. Regenerate from portfolio content with `npm run resume` (see `scripts/build-resume.py`).
+Visitors download **`public/XCResume2026.pdf`**. The editable Word file **`public/XCResume2026.docx`** is kept in sync when you run `npm run resume` (see `scripts/build-resume.py`). Python deps: `pip install -r scripts/requirements-resume.txt`.
