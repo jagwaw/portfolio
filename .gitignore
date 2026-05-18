@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Nuxt
+.nuxt/
+.output/
+.data/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Backup
+*.bak

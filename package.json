@@ -1,0 +1,30 @@
+{
+  "name": "xc-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "dev:clean": "rm -rf .nuxt && node scripts/patch-nuxt-callhook.mjs && nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare && node scripts/patch-nuxt-callhook.mjs",
+    "predev": "node scripts/patch-nuxt-callhook.mjs",
+    "resume": "python3 scripts/build-resume.py"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "nuxt": "^3.11.0",
+    "typescript": "^5.4.5",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  }
+}
