@@ -18,15 +18,7 @@
           <h3 class="font-display font-bold text-white text-lg">{{ role }}</h3>
           <p class="font-body text-violet-300 font-medium text-sm mt-0.5">{{ company }}</p>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-xs text-slate-500 whitespace-nowrap">{{ dateRange }}</span>
-          <span
-            v-if="current"
-            class="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-violet-500/15 text-violet-300 border border-violet-500/30"
-          >
-            Present
-          </span>
-        </div>
+        <span class="font-mono text-xs text-slate-500 whitespace-nowrap">{{ dateRange }}</span>
       </div>
 
       <!-- Bullets -->

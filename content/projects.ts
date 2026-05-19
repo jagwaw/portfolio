@@ -24,7 +24,7 @@ export const projects: ProjectsContent = {
   work: {
     title: "Frontend work I've shipped",
     description:
-      'Product UI from BillEase and earlier roles — mostly Vue, Nuxt, and TypeScript. Click a card for the full case study.',
+      'Product UI from Billlease and earlier roles — mostly Vue, Nuxt, and TypeScript. Click a card for the full case study.',
   },
   personal: {
     title: 'Personal projects',

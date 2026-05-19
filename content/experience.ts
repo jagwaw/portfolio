@@ -7,7 +7,7 @@ export const experience: ExperienceContent = {
   },
   jobs: [
     {
-      company: 'BillEase',
+      company: 'Billlease',
       role: 'Frontend Software Engineer',
       dateRange: 'Feb 2024 – Present',
       current: true,

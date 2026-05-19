@@ -14,7 +14,7 @@ export const about: AboutContent = {
   ],
   currentRole: {
     label: 'Currently at',
-    company: 'BillEase',
+    company: 'Billlease',
     title: 'Frontend Software Engineer',
   },
   paragraphs: [

@@ -32,7 +32,7 @@ SKILLS: list[tuple[str, str]] = [
 
 JOBS: list[dict] = [
     {
-        "header": "BillEase — Frontend Software Engineer",
+        "header": "Billlease — Frontend Software Engineer",
         "dates": "Feb 2024 – Present",
         "bullets": [
             "Implemented redesigned flows for Account Recovery v2 and sign-up registration",
