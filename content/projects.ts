@@ -114,16 +114,23 @@ export const projects: ProjectsContent = {
     },
   ],
   personalProjects: [
-    // {
-    //   id: 'verifyflow-ui',
-    //   kind: 'personal',
-    //   name: 'VerifyFlow UI Kit',
-    //   description: 'Mock KYC / liveness verification flow built with Nuxt 3.',
-    //   stack: ['Nuxt 3', 'TypeScript', 'Tailwind CSS'],
-    //   category: 'Open Source',
-    //   githubUrl: 'https://github.com/jagwaw/verifyflow-ui',
-    //   demoUrl: 'https://verifyflow.vercel.app',
-    //   highlights: ['Multi-step flow composable with session resume'],
-    // },
+    {
+      id: 'statecraft',
+      kind: 'personal',
+      name: 'Statecraft',
+      description:
+        'Flow modeling before UI: edit states and transitions, analyze gaps, preview legal paths, and export a typed useFlowMachine() skeleton.',
+      stack: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Tailwind CSS'],
+      category: 'Open Source',
+      featured: true,
+      githubUrl: 'https://github.com/jagwaw/statecraft',
+      demoUrl: 'https://statecraft-lyart.vercel.app/',
+      highlights: [
+        'Editor with draft validation and localStorage persistence',
+        'Analysis: unreachable states, dead ends, and broken transition targets',
+        'Preview runner with illegal-transition feedback and keyboard navigation',
+        'Composable + Mermaid export for handoff to production code',
+      ],
+    },
   ],
 }
