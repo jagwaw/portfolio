@@ -16,10 +16,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_SOURCE = ROOT / "assets" / "img" / "xc.jpg"
 PHOTO_INCHES = 2
-# Matches AboutSection.vue: object-cover, scale 1.65, origin 50% 42%
-PHOTO_ZOOM = 1.65
-PHOTO_ORIGIN_X = 0.5
-PHOTO_ORIGIN_Y = 0.42
+# Face framing for xc.jpg when re-cropping from source (slightly right in frame)
+PHOTO_ORIGIN_X = 0.47
+PHOTO_ORIGIN_Y = 0.40
 OUT_DOCX = ROOT / "public" / "XCResume2026.docx"
 OUT_PDF = ROOT / "public" / "XCResume2026.pdf"
 OUT_PHOTO_JPEG = ROOT / "public" / "images" / "xc-resume-2x2.jpg"
@@ -90,19 +89,22 @@ JOBS: list[dict] = [
 
 
 def crop_profile_photo() -> bytes:
-    """Square crop aligned with portfolio About section framing; 300 DPI for 2in print."""
+    """2x2 square from assets/img/xc.jpg (already square); resize for 2in @ 300 DPI print."""
     if not PROFILE_SOURCE.is_file():
         raise FileNotFoundError(f"Profile photo not found: {PROFILE_SOURCE}")
 
     img = Image.open(PROFILE_SOURCE).convert("RGB")
     width, height = img.size
-    base = min(width, height)
-    crop_size = base / PHOTO_ZOOM
-    cx = width * PHOTO_ORIGIN_X
-    cy = height * PHOTO_ORIGIN_Y
-    left = max(0, min(cx - crop_size / 2, width - crop_size))
-    top = max(0, min(cy - crop_size / 2, height - crop_size))
-    square = img.crop((int(left), int(top), int(left + crop_size), int(top + crop_size)))
+
+    if width == height:
+        square = img
+    else:
+        side = min(width, height)
+        cx = width * PHOTO_ORIGIN_X
+        cy = height * PHOTO_ORIGIN_Y
+        left = max(0, min(cx - side / 2, width - side))
+        top = max(0, min(cy - side / 2, height - side))
+        square = img.crop((int(left), int(top), int(left + side), int(top + side)))
 
     px = int(PHOTO_INCHES * 300)
     square = square.resize((px, px), Image.Resampling.LANCZOS)
@@ -143,31 +145,28 @@ def build_docx(photo_jpeg: bytes) -> None:
     doc = Document()
     photo_stream = io.BytesIO(photo_jpeg)
 
-    header = doc.add_table(rows=1, cols=2)
-    header.autofit = False
-    text_cell, photo_cell = header.rows[0].cells
-    text_cell.width = Inches(4.5)
-    photo_cell.width = Inches(PHOTO_INCHES)
-
-    name = text_cell.paragraphs[0]
-    name_run = name.add_run("Exiequielle John Frias (XC)")
-    name_run.bold = True
-    name_run.font.size = Pt(16)
-
-    title = text_cell.add_paragraph()
-    title_run = title.add_run("Frontend Engineer")
-    title_run.font.size = Pt(12)
-
-    contact = text_cell.add_paragraph()
-    contact.add_run(CONTACT_LINE).font.size = Pt(10)
-
-    photo_para = photo_cell.paragraphs[0]
-    photo_para.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    photo_para = doc.add_paragraph()
+    photo_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     photo_para.add_run().add_picture(
         photo_stream,
         width=Inches(PHOTO_INCHES),
         height=Inches(PHOTO_INCHES),
     )
+
+    name = doc.add_paragraph()
+    name_run = name.add_run("Exiequielle John Frias (XC)")
+    name_run.bold = True
+    name_run.font.size = Pt(16)
+    name.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    title = doc.add_paragraph()
+    title_run = title.add_run("Frontend Engineer")
+    title_run.font.size = Pt(12)
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    contact = doc.add_paragraph()
+    contact.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    contact.add_run(CONTACT_LINE).font.size = Pt(10)
 
     doc.add_paragraph()
 
@@ -226,24 +225,18 @@ def build_pdf(photo_jpeg: bytes) -> None:
     pdf.add_page()
 
     photo_mm = PHOTO_INCHES * 25.4
-    photo_x = pdf.w - pdf.r_margin - photo_mm
+    photo_x = (pdf.w - photo_mm) / 2
     photo_y = pdf.t_margin
-    # Use file path (more reliable across PDF viewers than BytesIO alone)
     pdf.image(str(OUT_PHOTO_JPEG), x=photo_x, y=photo_y, w=photo_mm, h=photo_mm)
 
-    text_right = photo_x - 4
-    text_w = text_right - pdf.l_margin
-
-    pdf.set_xy(pdf.l_margin, photo_y)
+    pdf.set_y(photo_y + photo_mm + 4)
     pdf.set_font("Helvetica", "B", 16)
-    pdf.multi_cell(text_w, 7, pdf_safe("Exiequielle John Frias (XC)"))
+    pdf.cell(0, 8, pdf_safe("Exiequielle John Frias (XC)"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 12)
-    pdf.multi_cell(text_w, 6, pdf_safe("Frontend Engineer"))
+    pdf.cell(0, 6, pdf_safe("Frontend Engineer"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 9)
-    pdf.multi_cell(text_w, 4, pdf_safe(CONTACT_LINE))
-
-    header_bottom = max(pdf.get_y(), photo_y + photo_mm)
-    pdf.set_y(header_bottom + 4)
+    pdf.multi_cell(0, 4, pdf_safe(CONTACT_LINE), align="C")
+    pdf.ln(4)
 
     pdf.section_heading("Summary")
     pdf.body_text(SUMMARY)
@@ -274,6 +267,8 @@ def build_pdf(photo_jpeg: bytes) -> None:
     OUT_PDF.parent.mkdir(parents=True, exist_ok=True)
     pdf.output(str(OUT_PDF))
     print(f"Wrote {OUT_PDF}")
+    print(f"Photo: {OUT_PHOTO_JPEG}")
+    print("If Preview still looks old: quit Preview, then reopen this PDF.")
 
 
 def main() -> None:

@@ -16,7 +16,7 @@
               <img
                 :src="profilePhoto"
                 :alt="about.photoAlt"
-                class="w-full h-full object-cover scale-[1.65] origin-[50%_42%] translate-y-1"
+                class="w-full h-full object-cover"
                 width="160"
                 height="160"
                 loading="lazy"
