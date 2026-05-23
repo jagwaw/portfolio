@@ -85,4 +85,4 @@ npm run build
 # Vercel: connect repo, Node 20, build command `npm run build`
 ```
 
-Visitors download **`public/XCResume2026.pdf`**. The editable Word file **`public/XCResume2026.docx`** is kept in sync when you run `npm run resume` (see `scripts/build-resume.py`). Python deps: `pip install -r scripts/requirements-resume.txt`.
+Visitors download **`public/XCResume2026.pdf`**. Regenerate locally before committing: `npm run resume` (see `scripts/build-resume.py`; requires `pip install -r scripts/requirements-resume.txt`). Vercel uses the committed files in `public/` — resume is not built on deploy.
