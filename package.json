@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "python3 -m pip install -q -r scripts/requirements-resume.txt && python3 scripts/build-resume.py && nuxt build",
     "dev": "nuxt dev",
     "dev:clean": "rm -rf .nuxt && node scripts/patch-nuxt-callhook.mjs && nuxt dev",
     "generate": "nuxt generate",

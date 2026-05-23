@@ -13,7 +13,7 @@ export const links: SiteLinks = {
   github: 'https://github.com/jagwaw',
   githubPortfolio: 'https://github.com/jagwaw/portfolio',
   linkedin: 'https://www.linkedin.com/in/exiequielle-john/',
-  resumeUrl: '/XCResume2026.pdf',
+  resumeUrl: '/XCResume2026.pdf?v=2',
 }
 
 export const seo: SiteSeo = {

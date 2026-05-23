@@ -22,6 +22,7 @@ PHOTO_ORIGIN_X = 0.5
 PHOTO_ORIGIN_Y = 0.42
 OUT_DOCX = ROOT / "public" / "XCResume2026.docx"
 OUT_PDF = ROOT / "public" / "XCResume2026.pdf"
+OUT_PHOTO_JPEG = ROOT / "public" / "images" / "xc-resume-2x2.jpg"
 
 CONTACT_LINE = (
     "Manila, Philippines  |  frias.exiequiellejohn@gmail.com  |  "
@@ -105,6 +106,9 @@ def crop_profile_photo() -> bytes:
 
     px = int(PHOTO_INCHES * 300)
     square = square.resize((px, px), Image.Resampling.LANCZOS)
+
+    OUT_PHOTO_JPEG.parent.mkdir(parents=True, exist_ok=True)
+    square.save(OUT_PHOTO_JPEG, format="JPEG", quality=92, optimize=True)
 
     buf = io.BytesIO()
     square.save(buf, format="JPEG", quality=92, optimize=True)
@@ -224,7 +228,8 @@ def build_pdf(photo_jpeg: bytes) -> None:
     photo_mm = PHOTO_INCHES * 25.4
     photo_x = pdf.w - pdf.r_margin - photo_mm
     photo_y = pdf.t_margin
-    pdf.image(io.BytesIO(photo_jpeg), x=photo_x, y=photo_y, w=photo_mm, h=photo_mm)
+    # Use file path (more reliable across PDF viewers than BytesIO alone)
+    pdf.image(str(OUT_PHOTO_JPEG), x=photo_x, y=photo_y, w=photo_mm, h=photo_mm)
 
     text_right = photo_x - 4
     text_w = text_right - pdf.l_margin
