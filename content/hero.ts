@@ -5,10 +5,10 @@ export const hero: HeroContent = {
   greeting: "Hi, I'm ",
   nickname: 'XC.',
   typewriterPrefix: 'I build as a ',
-  roles: ['Frontend Engineer', 'Vue.js Developer', 'Nuxt Specialist', 'UI Engineer'],
+  roles: ['Full Stack Developer', 'Vue/Nuxt Engineer', 'Django API Developer', 'Deployment-Focused Builder'],
   bio: {
     location: 'Manila, Philippines',
-    body: 'I ship production UI with Vue, Nuxt, and TypeScript — with a sharp eye for UX, performance, and polish.',
+    body: 'I ship production products across Vue/Nuxt frontends, Django REST APIs, realtime services, and deployment pipelines.',
   },
   ctas: {
     viewWork: 'View My Work',

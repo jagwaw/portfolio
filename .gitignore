@@ -27,3 +27,5 @@ Thumbs.db
 
 # Backup
 *.bak
+.vercel
+.pip_packages/

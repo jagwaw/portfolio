@@ -6,14 +6,14 @@ export const projects: ProjectsContent = {
   },
   labels: {
     personalBadge: 'Personal · Open source',
-    featuredBadge: 'Featured · Frontend',
-    workBadge: 'Work · Product UI',
+    featuredBadge: 'Featured · Full stack',
+    workBadge: 'Work · Product engineering',
     workCardCta: 'View case study',
     personalCardCta: 'View details',
     modalPersonalType: 'Personal project',
     modalWorkType: 'Project',
     personalModalBadge: 'Open source · GitHub',
-    featuredModalBadge: 'Frontend · company-internal',
+    featuredModalBadge: 'Full stack · company-internal',
     workModalBadge: 'Company-internal project',
     viewGithub: 'View on GitHub',
     liveDemo: 'Live demo',
@@ -22,9 +22,9 @@ export const projects: ProjectsContent = {
     close: 'Close',
   },
   work: {
-    title: "Frontend work I've shipped",
+    title: "Full-stack work I've shipped",
     description:
-      'Product UI from Billlease and earlier roles — mostly Vue, Nuxt, and TypeScript. Click a card for the full case study.',
+      'Product and platform work from Billlease and earlier roles — Vue/Nuxt frontends, Django APIs, realtime services, and deployment workflows. Click a card for the full case study.',
   },
   personal: {
     title: 'Personal projects',
@@ -42,8 +42,8 @@ export const projects: ProjectsContent = {
       id: 'liveness-verification',
       name: 'Liveness Verification Flow',
       description:
-        'A frontend implementation of a real-time selfie and ID verification system using an in-house biometric SDK. Designed to handle the full user journey — from camera permission to identity confirmation — with robust error handling, liveness detection, OCR fallback, and intuitive retake support.',
-      stack: ['Nuxt.js', 'TypeScript', 'Tailwind CSS', 'Vuex'],
+        'A real-time selfie and ID verification flow using an in-house biometric SDK, API-backed verification states, and resilient user recovery paths. Designed to handle the full journey — from camera permission to identity confirmation — with robust error handling, liveness detection, OCR fallback, and intuitive retake support.',
+      stack: ['Nuxt.js', 'TypeScript', 'Django REST Framework', 'Django Channels', 'Redis'],
       category: 'Fintech',
       kind: 'work',
       featured: true,
@@ -56,10 +56,10 @@ export const projects: ProjectsContent = {
     },
     {
       id: 'fintech-registration',
-      name: 'Fintech Registration & Recovery UI',
+      name: 'Fintech Registration & Recovery Platform',
       description:
-        'Redesigned the sign-up and account recovery flows for a fintech platform, focusing on UX clarity, accessibility, and performance. Involved an overhaul of the component architecture, improved state management, and a fresh visual design aligned with brand standards.',
-      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Tailwind CSS'],
+        'Redesigned sign-up and account recovery flows for a fintech platform, pairing UX clarity and component architecture with API integrations, auth state handling, and deployment-aware delivery.',
+      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Django REST Framework', 'PostgreSQL'],
       category: 'Fintech',
       kind: 'work',
       featured: true,
@@ -68,6 +68,32 @@ export const projects: ProjectsContent = {
         'Improved form validation UX with real-time feedback',
         'Refactored Vuex state structure for auth flows',
         'Achieved significant reduction in drop-off rates during registration',
+      ],
+    },
+    {
+      id: 'billlease-platform-delivery',
+      name: 'Billlease Platform Delivery Stack',
+      description:
+        'Production delivery work across backend services, async workers, realtime channels, and CI/CD automation for fintech product releases.',
+      stack: [
+        'Python 3.9',
+        'Django 4.1',
+        'Django REST Framework',
+        'Celery',
+        'RabbitMQ',
+        'Kafka',
+        'Docker',
+        'GitLab CI',
+        'Ansible',
+      ],
+      category: 'Platform',
+      kind: 'work',
+      featured: true,
+      highlights: [
+        'Supported Gunicorn, Nginx, Daphne, and systemd service patterns for production serving',
+        'Worked with PostgreSQL, Redis, RabbitMQ, and Kafka-backed services',
+        'Used Docker Compose and registry images to standardize deployable services',
+        'Contributed to GitLab CI and semantic-release workflows for repeatable releases',
       ],
     },
     {

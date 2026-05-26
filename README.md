@@ -1,6 +1,6 @@
-# XC Portfolio — Nuxt 3
+# XC Portfolio - Nuxt 3
 
-> Personal portfolio for Exiequielle John Frias (XC) — Frontend Engineer, Manila, Philippines.
+> Personal portfolio for Exiequielle John Frias (XC) - Full Stack Developer, Manila, Philippines.
 
 ## Stack
 

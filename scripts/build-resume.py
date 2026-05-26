@@ -29,31 +29,31 @@ CONTACT_LINE = (
 )
 
 SUMMARY = (
-    "Frontend Engineer with 8+ years of experience shipping production UI in fintech and "
-    "product teams. Specialized in Vue, Nuxt, and TypeScript — from onboarding and "
-    "verification flows to component systems that scale. Comfortable across the stack "
-    "with Python and REST APIs when products need it."
+    "Full Stack Developer with 8+ years of experience shipping fintech and product systems "
+    "across Vue/Nuxt frontends, Django REST APIs, realtime services, async workers, and "
+    "deployment pipelines. Comfortable owning features from polished UI through backend "
+    "integration, CI/CD, and production serving."
 )
 
 SKILLS: list[tuple[str, str]] = [
     ("Frontend", "Vue.js, Nuxt.js 2 & 3, TypeScript, JavaScript, Tailwind CSS, SASS/SCSS, Vuex/Pinia, GSAP, PWA, WebSocket, responsive UI"),
     ("Tools & AI", "Git, Figma, Cursor, Claude, ChatGPT, Postman, JIRA, Confluence, Bitbucket, ClickUp"),
-    ("Backend", "REST API, FastAPI, Python, Django, PHP, Symfony, SQLAlchemy, JWT"),
-    ("Databases", "PostgreSQL, MySQL, MongoDB, Redis"),
-    ("DevOps", "Docker, NGINX, Linux, AWS"),
+    ("Backend", "Python 3.9, Django 4.1, Django REST Framework 3.14, FastAPI, Django Channels, Daphne, Gunicorn, Celery, RabbitMQ, Kafka, REST APIs"),
+    ("Databases", "PostgreSQL, Redis, MySQL, MongoDB"),
+    ("CI/CD & Deployment", "GitLab CI, semantic-release, Ansible deployment scripts, systemd services, Docker, Docker Compose, Docker registry images, Nginx, AWS EC2/RDS/S3-style targets"),
 ]
 
 JOBS: list[dict] = [
     {
-        "header": "Billlease — Frontend Software Engineer",
+        "header": "Billlease — Full Stack Developer",
         "dates": "Feb 2024 – Present",
         "bullets": [
             "Implemented redesigned flows for Account Recovery v2 and sign-up registration",
-            "Integrated liveness detection using in-house Innovatrics SDK on the frontend",
-            "Built Chat Notification UI, Bills Upload AI UI, and Pay Now Installments UI",
-            "Developed FOMO feature and Mobile Load Promo Feature for user engagement campaigns",
-            "Led frontend implementation of TOTP Retirement, migrating users to updated auth flows",
-            "Built Activation 2.0 UI, improving onboarding and account activation experience",
+            "Built product features across Vue/Nuxt frontends and Django REST API integrations",
+            "Worked with Django Channels, Daphne, Redis, Celery, RabbitMQ, and Kafka-backed services",
+            "Supported GitLab CI, semantic-release, Docker registry images, and Ansible/systemd deployment scripts",
+            "Integrated liveness detection using in-house Innovatrics SDK and backend verification flows",
+            "Built Chat Notification UI, Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features",
         ],
     },
     {
@@ -160,7 +160,7 @@ def build_docx(photo_jpeg: bytes) -> None:
     name.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     title = doc.add_paragraph()
-    title_run = title.add_run("Frontend Engineer")
+    title_run = title.add_run("Full Stack Developer")
     title_run.font.size = Pt(12)
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -233,7 +233,7 @@ def build_pdf(photo_jpeg: bytes) -> None:
     pdf.set_font("Helvetica", "B", 16)
     pdf.cell(0, 8, pdf_safe("Exiequielle John Frias (XC)"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 12)
-    pdf.cell(0, 6, pdf_safe("Frontend Engineer"), align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, pdf_safe("Full Stack Developer"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 9)
     pdf.multi_cell(0, 4, pdf_safe(CONTACT_LINE), align="C")
     pdf.ln(4)

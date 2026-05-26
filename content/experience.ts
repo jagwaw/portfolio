@@ -8,16 +8,16 @@ export const experience: ExperienceContent = {
   jobs: [
     {
       company: 'Billlease',
-      role: 'Frontend Software Engineer',
+      role: 'Full Stack Developer',
       dateRange: 'Feb 2024 – Present',
       current: true,
       bullets: [
         'Implemented redesigned flows for Account Recovery v2 and sign-up registration',
-        'Integrated liveness detection using in-house Innovatrics SDK on the frontend',
-        'Built Chat Notification UI, Bills Upload AI UI, and Pay Now Installments UI',
-        'Developed FOMO feature and Mobile Load Promo Feature for user engagement campaigns',
-        'Led frontend implementation of TOTP Retirement, migrating users to updated auth flows',
-        'Built Activation 2.0 UI, improving the onboarding and account activation experience',
+        'Built product features across Vue/Nuxt frontends and Django REST API integrations',
+        'Worked with Django Channels, Daphne, Redis, Celery, RabbitMQ, and Kafka-backed services for realtime and asynchronous workflows',
+        'Supported GitLab CI, semantic-release, Docker registry images, and Ansible/systemd deployment scripts for AWS EC2/RDS/S3-style targets',
+        'Integrated liveness detection using in-house Innovatrics SDK and backend verification flows',
+        'Built Chat Notification UI, Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features',
       ],
     },
     {

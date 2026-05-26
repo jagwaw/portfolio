@@ -1,5 +1,5 @@
 <template>
-  <span class="skill-pill" :class="sizeClass">
+  <span class="skill-pill">
     {{ name }}
   </span>
 </template>
