@@ -1,6 +1,6 @@
 # XC Portfolio - Nuxt 3
 
-> Personal portfolio for Exiequielle John Frias (XC) - Full Stack Developer, Manila, Philippines.
+> Personal portfolio for Exiequielle John Frias (XC) - Vue.js Developer, Manila, Philippines.
 
 ## Stack
 
@@ -43,9 +43,11 @@ portfolio/
 │   ├── ProjectModal.vue
 │   └── …
 ├── public/
-│   ├── XCResume2026.pdf    # Resume download (visitors)
-│   ├── XCResume2026.docx   # Editable source (regenerate: npm run resume)
+│   ├── XCResume-vue-frontend.pdf    # Resume download (visitors)
+│   ├── XCResume-vue-frontend.docx   # Editable source (regenerate: npm run resume)
 │   └── images/projects/    # Thumbnails: {project-id}.jpg
+├── archive/
+│   └── XCResume2026.*      # Previous full-stack resume (not linked on site)
 └── scripts/
     └── patch-nuxt-callhook.mjs
 ```
@@ -85,4 +87,4 @@ npm run build
 # Vercel: connect repo, Node 20, build command `npm run build`
 ```
 
-Visitors download **`public/XCResume2026.pdf`**. Regenerate locally before committing: `npm run resume` (see `scripts/build-resume.py`; requires `pip install -r scripts/requirements-resume.txt`). Vercel uses the committed files in `public/` — resume is not built on deploy.
+Visitors download **`public/XCResume-vue-frontend.pdf`**. Regenerate locally before committing: `npm run resume` (see `scripts/build-resume.py`; requires `pip install -r scripts/requirements-resume.txt`). Vercel uses the committed files in `public/` — resume is not built on deploy. The previous full-stack resume lives in **`archive/`** and is not linked from the site.

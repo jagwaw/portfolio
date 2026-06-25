@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate public/XCResume2026.docx (editable) and XCResume2026.pdf (download)."""
+"""Generate public/XCResume-vue-frontend.docx (editable) and XCResume-vue-frontend.pdf (download)."""
 
 from __future__ import annotations
 
@@ -19,8 +19,8 @@ PHOTO_INCHES = 2
 # Face framing for xc.jpg when re-cropping from source (slightly right in frame)
 PHOTO_ORIGIN_X = 0.47
 PHOTO_ORIGIN_Y = 0.40
-OUT_DOCX = ROOT / "public" / "XCResume2026.docx"
-OUT_PDF = ROOT / "public" / "XCResume2026.pdf"
+OUT_DOCX = ROOT / "public" / "XCResume-vue-frontend.docx"
+OUT_PDF = ROOT / "public" / "XCResume-vue-frontend.pdf"
 OUT_PHOTO_JPEG = ROOT / "public" / "images" / "xc-resume-2x2.jpg"
 
 CONTACT_LINE = (
@@ -29,31 +29,46 @@ CONTACT_LINE = (
 )
 
 SUMMARY = (
-    "Full Stack Developer with 8+ years of experience shipping fintech and product systems "
-    "across Vue/Nuxt frontends, Django REST APIs, realtime services, async workers, and "
-    "deployment pipelines. Comfortable owning features from polished UI through backend "
-    "integration, CI/CD, and production serving."
+    "Vue.js developer with 8+ years building responsive, production-grade web applications "
+    "for fintech and SaaS products serving thousands of daily users. Deep experience with "
+    "Vue, Vuex, Vue Router, TypeScript, SCSS, and Webpack-based builds. Comfortable owning "
+    "features from user stories through peer review, real-time UI, performance tuning, and "
+    "production support."
 )
 
 SKILLS: list[tuple[str, str]] = [
-    ("Frontend", "Vue.js, Nuxt.js 2 & 3, TypeScript, JavaScript, Tailwind CSS, SASS/SCSS, Vuex/Pinia, GSAP, PWA, WebSocket, responsive UI"),
-    ("Tools & AI", "Git, Figma, Cursor, Claude, ChatGPT, Postman, JIRA, Confluence, Bitbucket, ClickUp"),
-    ("Backend", "Python 3.9, Django 4.1, Django REST Framework 3.14, FastAPI, Django Channels, Daphne, Gunicorn, Celery, RabbitMQ, Kafka, REST APIs"),
-    ("Databases", "PostgreSQL, Redis, MySQL, MongoDB"),
-    ("CI/CD & Deployment", "GitLab CI, semantic-release, Ansible deployment scripts, systemd services, Docker, Docker Compose, Docker registry images, Nginx, AWS EC2/RDS/S3-style targets"),
+    (
+        "Frontend",
+        "Vue.js, Vuex, Vue Router, Vuetify, Nuxt.js 2 & 3, TypeScript, JavaScript (ES6+), "
+        "SCSS/SASS, Webpack, Firebase, Tailwind CSS, responsive UI, WebSocket, PWA, GSAP",
+    ),
+    (
+        "Practices",
+        "Agile ceremonies, peer code review, user-story delivery, UX-focused iteration, "
+        "production incident response, mentoring junior developers",
+    ),
+    (
+        "Tools",
+        "Git, Figma, Postman, JIRA, Confluence, Bitbucket, ClickUp, Cursor, Claude, ChatGPT",
+    ),
+    (
+        "Backend familiarity",
+        "Python, Django REST Framework, Django Channels, Redis, Celery, REST APIs, PostgreSQL",
+    ),
 ]
 
 JOBS: list[dict] = [
     {
-        "header": "Billlease — Full Stack Developer",
+        "header": "Billlease — Full Stack Developer (Vue/Nuxt focus)",
         "dates": "Feb 2024 – Present",
         "bullets": [
-            "Implemented redesigned flows for Account Recovery v2 and sign-up registration",
-            "Built product features across Vue/Nuxt frontends and Django REST API integrations",
-            "Worked with Django Channels, Daphne, Redis, Celery, RabbitMQ, and Kafka-backed services",
-            "Supported GitLab CI, semantic-release, Docker registry images, and Ansible/systemd deployment scripts",
-            "Integrated liveness detection using in-house Innovatrics SDK and backend verification flows",
-            "Built Chat Notification UI, Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features",
+            "Ship responsive Vue/Nuxt + Vuetify interfaces for Billlease fintech flows used by thousands of daily end-users",
+            "Refactored Vuex state for sign-up, account recovery, and verification journeys",
+            "Built real-time Chat Notification UI and verification flows with WebSocket-backed updates",
+            "Integrate Firebase (App Check, client SDK) in production Billlease Nuxt applications",
+            "Partnered with product owners on user stories, grooming, demos, and peer code reviews",
+            "Diagnosed and resolved production UI issues across mobile and desktop breakpoints",
+            "Delivered Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features",
         ],
     },
     {
@@ -61,8 +76,9 @@ JOBS: list[dict] = [
         "dates": "Oct 2021 – Jan 2024",
         "bullets": [
             "Maintained and improved client-facing websites for a global gaming company",
-            "Designed and implemented mobile-first features for better user experience",
-            "Collaborated with European and American stakeholders on requirements, reviews, and frontend delivery",
+            "Designed and implemented mobile-first, performance-conscious UI features",
+            "Collaborated with European and American stakeholders on requirements and frontend delivery",
+            "Participated in sprint planning, reviews, and cross-timezone communication",
         ],
     },
     {
@@ -71,18 +87,16 @@ JOBS: list[dict] = [
         "bullets": [
             "Worked on a cloud-based data warehouse platform for an Asia-based client team",
             "Created and modified data source integrations from multiple providers",
-            "Collaborated with Asian stakeholders on requirements, delivery, and technical decisions",
-            "Wrote clean, testable, PEP-compliant Python code for features and bug fixes",
+            "Collaborated with stakeholders on requirements, delivery, and technical decisions",
         ],
     },
     {
         "header": "Remote Staff — Junior Full-Stack Developer",
         "dates": "Jul 2018 – May 2021",
         "bullets": [
-            "Collaborated with Australian clients on requirements and delivery for remote product work",
-            "Built a remote classroom platform tracking real-time user activity",
-            "Developed project and task management systems for clients, staff, teachers, and students",
-            "Delivered AngularJS + Python (Falcon/FastAPI) apps; containerized APIs with Docker for deployment",
+            "Built a remote classroom platform with real-time activity tracking for teachers and students",
+            "Developed project and task management UIs for clients, staff, teachers, and students",
+            "Delivered AngularJS + Python apps; collaborated with Australian clients on remote product work",
         ],
     },
 ]
@@ -160,7 +174,7 @@ def build_docx(photo_jpeg: bytes) -> None:
     name.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     title = doc.add_paragraph()
-    title_run = title.add_run("Full Stack Developer")
+    title_run = title.add_run("Vue.js Developer")
     title_run.font.size = Pt(12)
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -233,7 +247,7 @@ def build_pdf(photo_jpeg: bytes) -> None:
     pdf.set_font("Helvetica", "B", 16)
     pdf.cell(0, 8, pdf_safe("Exiequielle John Frias (XC)"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 12)
-    pdf.cell(0, 6, pdf_safe("Full Stack Developer"), align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, pdf_safe("Vue.js Developer"), align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 9)
     pdf.multi_cell(0, 4, pdf_safe(CONTACT_LINE), align="C")
     pdf.ln(4)

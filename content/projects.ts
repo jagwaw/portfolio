@@ -22,9 +22,9 @@ export const projects: ProjectsContent = {
     close: 'Close',
   },
   work: {
-    title: "Full-stack work I've shipped",
+    title: "Vue product work I've shipped",
     description:
-      'Product and platform work from Billlease and earlier roles — Vue/Nuxt frontends, Django APIs, realtime services, and deployment workflows. Click a card for the full case study.',
+      'Customer-facing SaaS and fintech interfaces — responsive Vue/Nuxt frontends, Vuex state, real-time UI, and production support. Click a card for the full case study.',
   },
   personal: {
     title: 'Personal projects',
@@ -43,7 +43,7 @@ export const projects: ProjectsContent = {
       name: 'Liveness Verification Flow',
       description:
         'A real-time selfie and ID verification flow using an in-house biometric SDK, API-backed verification states, and resilient user recovery paths. Designed to handle the full journey — from camera permission to identity confirmation — with robust error handling, liveness detection, OCR fallback, and intuitive retake support.',
-      stack: ['Nuxt.js', 'TypeScript', 'Django REST Framework', 'Django Channels', 'Redis'],
+      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Vuex', 'Vuetify', 'Firebase', 'Django Channels', 'Redis'],
       category: 'Fintech',
       kind: 'work',
       featured: true,
@@ -59,15 +59,31 @@ export const projects: ProjectsContent = {
       name: 'Fintech Registration & Recovery Platform',
       description:
         'Redesigned sign-up and account recovery flows for a fintech platform, pairing UX clarity and component architecture with API integrations, auth state handling, and deployment-aware delivery.',
-      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Django REST Framework', 'PostgreSQL'],
+      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Vuex', 'Vue Router', 'Vuetify', 'SCSS', 'Firebase'],
       category: 'Fintech',
       kind: 'work',
       featured: true,
       highlights: [
         'Full redesign of Account Recovery v2 with multi-step wizard pattern',
         'Improved form validation UX with real-time feedback',
-        'Refactored Vuex state structure for auth flows',
-        'Achieved significant reduction in drop-off rates during registration',
+        'Refactored Vuex state structure for auth and recovery flows',
+        'Reduced drop-off during registration through clearer UX and responsive layouts',
+      ],
+    },
+    {
+      id: 'chat-notifications',
+      name: 'Real-time Chat Notification UI',
+      description:
+        'Agent-facing notification interface with real-time updates for a high-traffic fintech product — built for responsiveness, clear UX, and fast production issue resolution.',
+      stack: ['Vue.js', 'Nuxt.js', 'TypeScript', 'Vuex', 'Vuetify', 'Firebase', 'WebSocket', 'SCSS'],
+      category: 'SaaS',
+      kind: 'work',
+      featured: true,
+      highlights: [
+        'Built responsive notification UI with real-time WebSocket updates',
+        'Structured Vuex modules for unread state and notification routing',
+        'Tuned performance for frequent updates without UI jank',
+        'Supported production troubleshooting across mobile and desktop',
       ],
     },
     {

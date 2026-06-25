@@ -8,16 +8,17 @@ export const experience: ExperienceContent = {
   jobs: [
     {
       company: 'Billlease',
-      role: 'Full Stack Developer',
+      role: 'Full Stack Developer (Vue/Nuxt focus)',
       dateRange: 'Feb 2024 – Present',
       current: true,
       bullets: [
-        'Implemented redesigned flows for Account Recovery v2 and sign-up registration',
-        'Built product features across Vue/Nuxt frontends and Django REST API integrations',
-        'Worked with Django Channels, Daphne, Redis, Celery, RabbitMQ, and Kafka-backed services for realtime and asynchronous workflows',
-        'Supported GitLab CI, semantic-release, Docker registry images, and Ansible/systemd deployment scripts for AWS EC2/RDS/S3-style targets',
-        'Integrated liveness detection using in-house Innovatrics SDK and backend verification flows',
-        'Built Chat Notification UI, Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features',
+        'Ship responsive Vue/Nuxt + Vuetify interfaces for Billlease fintech flows used by thousands of daily end-users',
+        'Refactored Vuex state for sign-up, account recovery, and verification journeys',
+        'Built real-time Chat Notification UI and verification flows with WebSocket-backed updates',
+        'Integrate Firebase (App Check, client SDK) in production Billlease Nuxt applications',
+        'Partnered with product owners on user stories, grooming, demos, and peer code reviews',
+        'Diagnosed and resolved production UI issues across mobile and desktop breakpoints',
+        'Delivered Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features',
       ],
     },
     {
@@ -26,8 +27,9 @@ export const experience: ExperienceContent = {
       dateRange: 'Oct 2021 – Jan 2024',
       bullets: [
         'Maintained and improved client-facing websites for a global gaming company',
-        'Designed and implemented mobile-first features for better user experience',
-        'Collaborated with European and American stakeholders on requirements, reviews, and frontend delivery',
+        'Designed and implemented mobile-first, performance-conscious UI features',
+        'Collaborated with European and American stakeholders on requirements and frontend delivery',
+        'Participated in sprint planning, reviews, and cross-timezone communication',
       ],
     },
     {
@@ -38,7 +40,6 @@ export const experience: ExperienceContent = {
         'Worked on a cloud-based data warehouse platform for an Asia-based client team',
         'Created and modified data source integrations to collect data from multiple providers',
         'Collaborated with Asian stakeholders on requirements, delivery, and technical decisions',
-        'Wrote clean, testable, PEP-compliant Python code for new features and bug fixes',
       ],
     },
     {
@@ -46,10 +47,9 @@ export const experience: ExperienceContent = {
       role: 'Junior Full-Stack Developer',
       dateRange: 'Jul 2018 – May 2021',
       bullets: [
+        'Built a remote classroom platform with real-time activity tracking for teachers and students',
+        'Developed project and task management UIs for clients, staff, teachers, and students',
         'Collaborated with Australian clients on requirements and delivery for remote product work',
-        'Built a remote classroom platform tracking real-time user activity throughout the day',
-        'Developed a project and task management system for clients and staff',
-        'Created an activity and task management system for teachers and students',
       ],
     },
   ],

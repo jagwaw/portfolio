@@ -3,7 +3,7 @@ import type { NavItem, Person, SiteLinks, SiteSeo } from '~/types/content'
 export const person: Person = {
   fullName: 'Exiequielle John Frias',
   nickname: 'XC',
-  title: 'Full Stack Developer',
+  title: 'Vue.js Developer',
   location: 'Manila, Philippines',
   locationFlag: '🇵🇭',
 }
@@ -13,15 +13,16 @@ export const links: SiteLinks = {
   github: 'https://github.com/jagwaw',
   githubPortfolio: 'https://github.com/jagwaw/portfolio',
   linkedin: 'https://www.linkedin.com/in/exiequielle-john/',
-  resumeUrl: '/XCResume2026.pdf?v=5',
+  resumeUrl: '/XCResume-vue-frontend.pdf?v=3',
 }
 
 export const seo: SiteSeo = {
-  title: 'XC — Full Stack Developer',
+  title: 'XC — Vue.js Developer',
   description:
-    'Exiequielle John Frias (XC) — Full Stack Developer in Manila, Philippines. Shipping Vue/Nuxt interfaces, Django REST APIs, and production deployment workflows.',
-  ogTitle: 'XC — Full Stack Developer',
-  ogDescription: 'Full Stack Developer building Vue/Nuxt products, Django APIs, and production-ready deployment pipelines.',
+    'Exiequielle John Frias (XC) — Vue.js Developer in Manila, Philippines. Building responsive SaaS interfaces with Vue, Vuex, Vuetify, TypeScript, Firebase, and real-time production apps.',
+  ogTitle: 'XC — Vue.js Developer',
+  ogDescription:
+    'Vue.js Developer shipping responsive product UIs with Vuex, Vuetify, Firebase, real-time features, and production support for high-traffic web applications.',
   themeColor: '#0a0a0f',
 }
 

@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/XCResume2026.pdf",
+      "source": "/XCResume-vue-frontend.pdf",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
