@@ -157,6 +157,24 @@ export const projects: ProjectsContent = {
   ],
   personalProjects: [
     {
+      id: 'nova-ui',
+      kind: 'personal',
+      name: 'NovaUI',
+      description:
+        'Fintech & support SaaS component library on Vuetify 3 — typed APIs, agent-console variants, design tokens, and SDK-style docs for NvButton, NvInput, and NvDialog.',
+      stack: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Vuetify 3', 'SCSS'],
+      category: 'Open Source',
+      featured: true,
+      githubUrl: 'https://github.com/jagwaw/nova-ui',
+      demoUrl: 'https://novaui-mocha.vercel.app/',
+      highlights: [
+        'Wraps Vuetify with consistent variants, density presets, and agent-alert tones',
+        'Design tokens page mapping colors, spacing, typography, and elevation',
+        'Component docs with live previews, props/emits tables, and copy-to-clipboard snippets',
+        'Dark theme default with novaDark/novaLight Vuetify theme registration',
+      ],
+    },
+    {
       id: 'statecraft',
       kind: 'personal',
       name: 'Statecraft',
