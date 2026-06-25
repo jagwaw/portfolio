@@ -157,6 +157,25 @@ export const projects: ProjectsContent = {
   ],
   personalProjects: [
     {
+      id: 'agent-desk',
+      kind: 'personal',
+      name: 'AgentDesk',
+      description:
+        'Mock NovaDesk agent console: real-time ticket queue, accept flow with race-condition handling, chat panel, connection banner, and responsive 3-column layout — built to mirror production customer-service SaaS UI.',
+      stack: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Vuex', 'Vuetify 3', 'SCSS', 'Vitest'],
+      category: 'SaaS',
+      featured: true,
+      githubUrl: 'https://github.com/jagwaw/agent-desk',
+      demoUrl: 'https://agent-desk-cyan.vercel.app/console',
+      highlights: [
+        'Vuex modules for queue, chat, and agent availability with mock real-time events',
+        'Accept flow with loading, offline guard, and “claimed by another agent” edge state',
+        'Chat send failures with retry-friendly error UI and resolve action',
+        'Connection banner for offline/reconnecting with retry sync',
+        'Responsive layout: mobile stack, tablet 2-col, desktop queue + chat + details',
+      ],
+    },
+    {
       id: 'nova-ui',
       kind: 'personal',
       name: 'NovaUI',
