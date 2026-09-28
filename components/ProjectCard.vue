@@ -13,22 +13,22 @@
       <h3 class="font-display font-bold text-white text-base mb-2 group-hover:text-violet-200 transition-colors">
         {{ project.name }}
       </h3>
-      <p class="font-body text-slate-500 text-sm leading-relaxed mb-5 line-clamp-3 flex-1">
+      <p class="font-body text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3 flex-1">
         {{ project.description }}
       </p>
       <div class="flex flex-wrap gap-1.5 mb-4">
         <span
           v-for="tech in project.stack.slice(0, 3)"
           :key="tech"
-          class="font-mono text-xs px-2 py-0.5 rounded-full border border-void-500 text-slate-600"
+          class="font-mono text-xs px-2 py-0.5 rounded-full border border-violet-500/20 text-slate-300"
         >
           {{ tech }}
         </span>
-        <span v-if="project.stack.length > 3" class="font-mono text-xs text-slate-600">
+        <span v-if="project.stack.length > 3" class="font-mono text-xs text-slate-400 self-center">
           +{{ project.stack.length - 3 }}
         </span>
       </div>
-      <div class="flex items-center gap-1.5 text-violet-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+      <div class="flex items-center gap-1.5 text-violet-400/70 group-hover:text-violet-300 text-sm font-medium transition-colors">
         <span class="font-mono text-xs">{{ cardCta }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

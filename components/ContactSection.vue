@@ -25,31 +25,22 @@
             </div>
             <div>
               <label class="block font-mono text-xs text-violet-400 mb-1.5">{{ contact.form.fields.name }}</label>
-              <input v-model="form.name" type="text" :placeholder="contact.form.placeholders.name" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-600 outline-none transition-colors" />
+              <input v-model="form.name" type="text" :placeholder="contact.form.placeholders.name" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-500 outline-none transition-colors" />
             </div>
             <div>
               <label class="block font-mono text-xs text-violet-400 mb-1.5">{{ contact.form.fields.email }}</label>
-              <input v-model="form.email" type="email" :placeholder="contact.form.placeholders.email" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-600 outline-none transition-colors" />
+              <input v-model="form.email" type="email" :placeholder="contact.form.placeholders.email" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-500 outline-none transition-colors" />
             </div>
             <div>
               <label class="block font-mono text-xs text-violet-400 mb-1.5">{{ contact.form.fields.message }}</label>
-              <textarea v-model="form.message" rows="5" :placeholder="contact.form.placeholders.message" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-600 outline-none transition-colors resize-none" />
+              <textarea v-model="form.message" rows="5" :placeholder="contact.form.placeholders.message" class="w-full bg-void-700 border border-void-500 hover:border-violet-500/30 focus:border-violet-500/60 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-slate-500 outline-none transition-colors resize-none" />
             </div>
-            <button class="btn-primary w-full justify-center" :disabled="sending" data-hover @click="handleSubmit">
-              <template v-if="sent">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                {{ contact.form.sent }}
-              </template>
-              <template v-else-if="sending">
-                <span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                {{ contact.form.sending }}
-              </template>
-              <template v-else>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-                {{ contact.form.submit }}
-              </template>
+            <button class="btn-primary w-full justify-center" data-hover @click="handleSubmit">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12L3.27 3.13a.5.5 0 01.68-.6l17.1 8.02a.5.5 0 010 .9l-17.1 8.02a.5.5 0 01-.68-.6L6 12zm0 0h7" /></svg>
+              {{ contact.form.submit }}
             </button>
-            <p v-if="sent" class="font-mono text-xs text-emerald-400 text-center">{{ contact.form.successNote }}</p>
+            <p v-if="formError" class="font-mono text-xs text-rose-400 text-center" role="alert">{{ formError }}</p>
+            <p v-if="sent && !formError" class="font-mono text-xs text-emerald-400 text-center" role="status">{{ contact.form.successNote }}</p>
           </div>
         </div>
 
@@ -116,7 +107,6 @@ const formCol = ref<HTMLElement | null>(null)
 const rightCol = ref<HTMLElement | null>(null)
 
 const form = reactive({ name: '', email: '', message: '' })
-const sending = ref(false)
 const sent = ref(false)
 
 const socialLinks = computed(() =>
@@ -127,15 +117,19 @@ const socialLinks = computed(() =>
   })),
 )
 
-const handleSubmit = async () => {
-  if (!form.name || !form.email || !form.message) return
-  sending.value = true
-  await new Promise((r) => setTimeout(r, 1500))
-  sending.value = false
+const formError = ref('')
+
+// No backend: open the visitor's email app with the message pre-filled, addressed to me.
+const handleSubmit = () => {
+  formError.value = ''
+  if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+    formError.value = contact.form.errorMissing
+    return
+  }
+  const subject = `Portfolio message from ${form.name.trim()}`
+  const body = `${form.message.trim()}\n\n— ${form.name.trim()} (${form.email.trim()})`
+  window.location.href = `mailto:${links.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   sent.value = true
-  form.name = ''
-  form.email = ''
-  form.message = ''
 }
 
 const { reveal } = useSectionReveal()

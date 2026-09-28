@@ -18,15 +18,15 @@
           <h3 class="font-display font-bold text-white text-lg">{{ role }}</h3>
           <p class="font-body text-violet-300 font-medium text-sm mt-0.5">{{ company }}</p>
         </div>
-        <span class="font-mono text-xs text-slate-500 whitespace-nowrap">{{ dateRange }}</span>
+        <span class="font-mono text-xs text-slate-400 whitespace-nowrap">{{ dateRange }}</span>
       </div>
 
       <!-- Bullets -->
-      <ul class="space-y-2">
+      <ul class="space-y-2.5">
         <li
           v-for="(point, i) in bullets"
           :key="i"
-          class="flex items-start gap-2.5 text-sm text-slate-400 font-body leading-relaxed"
+          class="flex items-start gap-2.5 text-[0.9375rem] text-slate-300 font-body leading-relaxed"
         >
           <span class="text-violet-500 mt-1.5 flex-shrink-0 text-xs">▸</span>
           {{ point }}

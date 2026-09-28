@@ -9,7 +9,7 @@
       <h2 ref="title" class="section-heading font-display text-4xl md:text-5xl font-bold text-white mb-16 gsap-hidden">
         {{ experience.section.title }}
       </h2>
-      <div class="relative max-w-3xl">
+      <div class="relative max-w-4xl">
         <div class="absolute left-[6px] top-2 bottom-0 w-0.5 bg-gradient-to-b from-violet-500 via-violet-500/40 to-transparent" />
         <div class="space-y-10">
           <div

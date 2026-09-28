@@ -16,6 +16,8 @@ export interface SiteSeo {
   ogTitle: string
   ogDescription: string
   themeColor: string
+  url: string
+  ogImage: string
 }
 
 export interface NavItem {
@@ -198,8 +200,7 @@ export interface ContactContent {
     fields: { name: string; email: string; message: string }
     placeholders: { name: string; email: string; message: string }
     submit: string
-    sending: string
-    sent: string
+    errorMissing: string
     successNote: string
   }
   direct: {

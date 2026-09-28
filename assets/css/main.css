@@ -20,23 +20,17 @@ body {
   color: #e2e0f0;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  cursor: none;
 }
 
 /* ─── Cursor ─── */
-.cursor-dot {
-  width: 5px;
-  height: 5px;
-  background: #8b5cf6;
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.2s;
+/* The native cursor stays visible; the ring is a subtle follower for mouse users only. */
+.cursor-ring { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cursor-ring { display: block; }
 }
 
 .cursor-ring {
+  opacity: 0;
   width: 30px;
   height: 30px;
   border: 1.5px solid rgba(139, 92, 246, 0.5);
@@ -45,7 +39,7 @@ body {
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, opacity 0.3s ease;
 }
 
 .cursor-ring.hovering {
@@ -207,7 +201,7 @@ body {
   font-weight: 600;
   font-size: 0.95rem;
   border: none;
-  cursor: none;
+  cursor: pointer;
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
@@ -241,7 +235,7 @@ body {
   font-weight: 600;
   font-size: 0.95rem;
   border: 1px solid rgba(124, 58, 237, 0.4);
-  cursor: none;
+  cursor: pointer;
   transition: all 0.25s ease;
 }
 
@@ -264,8 +258,24 @@ body {
   z-index: 0;
 }
 
-/* ─── Responsive helpers ─── */
-@media (max-width: 768px) {
-  body { cursor: auto; }
-  .cursor-dot, .cursor-ring { display: none; }
+/* ─── Keyboard focus ─── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gsap-hidden { opacity: 1 !important; transform: none !important; }
+  .cursor-ring { display: none !important; }
 }

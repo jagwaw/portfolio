@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div ref="cursorDot" class="cursor-dot" />
     <div ref="cursorRing" class="cursor-ring" />
 
     <NuxtLayout>
@@ -10,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-const cursorDot = ref<HTMLElement | null>(null)
 const cursorRing = ref<HTMLElement | null>(null)
 
 let animFrame = 0
@@ -19,9 +17,11 @@ let onPointerOver: ((e: PointerEvent) => void) | null = null
 let onPointerOut: ((e: PointerEvent) => void) | null = null
 
 onMounted(() => {
-  const dot = cursorDot.value
   const ring = cursorRing.value
-  if (!dot || !ring) return
+  if (!ring) return
+  // Mouse users only, and never when the visitor prefers reduced motion
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
   let mouseX = 0
   let mouseY = 0
@@ -33,8 +33,12 @@ onMounted(() => {
   onMouseMove = (e: MouseEvent) => {
     mouseX = e.clientX
     mouseY = e.clientY
-    dot.style.left = `${mouseX}px`
-    dot.style.top = `${mouseY}px`
+    if (ring.style.opacity !== '1') {
+      // Start the ring under the pointer instead of sweeping in from the corner
+      ringX = mouseX
+      ringY = mouseY
+      ring.style.opacity = '1'
+    }
   }
 
   const animateRing = () => {
