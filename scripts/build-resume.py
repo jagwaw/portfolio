@@ -24,12 +24,14 @@ PROFILE_SOURCE = ROOT / "assets" / "img" / "xc.jpg"
 PUBLIC = ROOT / "public"
 OUT_PHOTO_JPEG = PUBLIC / "images" / "xc-resume-2x2.jpg"
 PHOTO_INCHES = 1.1
+# ATS-safe default: no photo. Set True only for employers that ask for one.
+INCLUDE_PHOTO = False
 PHOTO_ORIGIN_X = 0.47
 PHOTO_ORIGIN_Y = 0.40
 
 # --------------------------------------------------------------------------- CONTENT
 
-NAME = "Exiequielle John Frias (XC)"
+NAME = "Exiequielle John Frias"
 CONTACT_LINE = (
     "Manila, Philippines  |  frias.exiequiellejohn@gmail.com  |  xcworks.vercel.app  |  "
     "linkedin.com/in/exiequielle-john  |  github.com/jagwaw"
@@ -98,18 +100,18 @@ VARIANTS: dict[str, dict] = {
         "file": "XCResume-vue-frontend",
         "title": "AI-Native Frontend Engineer  |  Vue, Nuxt, TypeScript",
         "summary": (
-            "Frontend-leaning engineer with 8+ years shipping production web apps. At BillEase, a Philippine "
+            "Frontend developer with 8+ years shipping production web apps. At BillEase, a Philippine "
             "fintech, I build KYC, payments, and credit products in Vue/Nuxt and TypeScript: I replaced a "
             "biometric vendor with an in-house liveness pipeline, led the frontend of a new credit line product, "
             "and drove a Figma-driven design-token migration. I build with Claude Code, Cursor, and MCP every day, "
             "and I'm comfortable in Python APIs when a feature spans the stack."
         ),
         "skills": [
-            ("Frontend", "Vue.js, Nuxt.js 2 & 3, TypeScript, JavaScript (ES6+), Vuex, Vue Router, Tailwind CSS, SCSS, Vuetify, Firebase, WebSocket, React"),
+            ("Frontend", "Vue.js (2 & 3), Nuxt.js, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, SCSS, Vuex, Vue Router, Vuetify, Firebase, WebSocket, React, responsive design"),
             ("AI-assisted dev", "Claude Code, Cursor, MCP (Figma, ClickUp), spec-driven agentic workflows"),
             ("Web performance", "Technical SEO, Core Web Vitals, Google Analytics, Dynatrace, A/B testing"),
             ("Backend", "Python, Django REST Framework, FastAPI, Flask, PostgreSQL, REST APIs"),
-            ("Tools", "Git, GitLab CI, Docker, Figma, Postman, JIRA, ClickUp"),
+            ("Practices & tools", "Unit testing (Vitest), code review, Agile/Scrum, CI/CD (GitLab CI), Git, Docker, AWS, Figma, Postman, JIRA"),
         ],
         "billease": ["core", "liveness", "credit", "recovery", "tokens", "refresh", "compression", "spec"],
     },
@@ -117,16 +119,17 @@ VARIANTS: dict[str, dict] = {
         "file": "XCResume-fullstack",
         "title": "Full-Stack Engineer  |  Vue/Nuxt + Python",
         "summary": (
-            "Full-stack engineer with 8+ years across Vue/Nuxt frontends and Python backends. I've written Python "
+            "Full-stack developer with 8+ years across Vue/Nuxt frontends and Python backends. I've written Python "
             "professionally since 2018: Flask and PostgreSQL APIs, a Python 2.7 to 3.7 migration onto FastAPI, and "
             "production Django REST APIs at BillEase, a Philippine fintech, where I also build KYC, payments, and "
             "credit products end to end. I build with Claude Code, Cursor, and MCP every day."
         ),
         "skills": [
             ("Backend", "Python, Django REST Framework, Django, FastAPI, Flask, SQLAlchemy, REST APIs"),
-            ("Frontend", "Vue.js, Nuxt.js, TypeScript, Vuex, Tailwind CSS, Firebase, WebSocket, React"),
-            ("Data & infra", "PostgreSQL, MySQL, Redis, Docker, Nginx, AWS, GitLab CI, Linux"),
+            ("Frontend", "Vue.js, Nuxt.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Vuex, Firebase, WebSocket, React"),
+            ("Data & infra", "PostgreSQL, MySQL, Redis, Docker, Nginx, AWS, CI/CD (GitLab CI), Linux, Git"),
             ("AI-assisted dev", "Claude Code, Cursor, MCP (Figma, ClickUp), spec-driven agentic workflows"),
+            ("Practices", "REST API design, unit testing, code review, Agile/Scrum"),
         ],
         "billease": ["core", "python", "liveness", "credit", "recovery", "tokens", "spec"],
     },
@@ -186,15 +189,14 @@ def build_docx(variant: dict, photo: bytes) -> Path:
     style.font.size = Pt(10)
     style.paragraph_format.space_after = Pt(1)
 
-    table = doc.add_table(rows=1, cols=2)
-    left, right = table.rows[0].cells
-    left.width, right.width = Inches(1.3), Inches(5.8)
-    left.paragraphs[0].add_run().add_picture(io.BytesIO(photo), width=Inches(PHOTO_INCHES))
-    n = right.paragraphs[0].add_run(NAME)
+    # Plain paragraphs, never a table: many ATS parsers skip table cells entirely.
+    if INCLUDE_PHOTO:
+        doc.add_paragraph().add_run().add_picture(io.BytesIO(photo), width=Inches(PHOTO_INCHES))
+    n = doc.add_paragraph().add_run(NAME)
     n.bold, n.font.size = True, Pt(18)
-    t = right.add_paragraph().add_run(variant["title"])
+    t = doc.add_paragraph().add_run(variant["title"])
     t.font.size, t.font.color.rgb = Pt(11.5), RGBColor(*ACCENT)
-    right.add_paragraph().add_run(CONTACT_LINE).font.size = Pt(9)
+    doc.add_paragraph().add_run(CONTACT_LINE).font.size = Pt(9)
 
     docx_heading(doc, "Summary")
     doc.add_paragraph(variant["summary"])
@@ -205,7 +207,7 @@ def build_docx(variant: dict, photo: bytes) -> Path:
         p.add_run(f"{label}: ").bold = True
         p.add_run(items)
 
-    docx_heading(doc, "Experience")
+    docx_heading(doc, "Work Experience")
     for job in jobs_for(variant):
         p = doc.add_paragraph()
         p.paragraph_format.space_before = Pt(5)
@@ -263,12 +265,16 @@ class ResumePDF(FPDF):
 def build_pdf(variant: dict) -> Path:
     pdf = ResumePDF()
     pdf.add_page()
-    photo_mm = PHOTO_INCHES * 25.4
     top = pdf.t_margin
-    pdf.image(str(OUT_PHOTO_JPEG), x=pdf.l_margin, y=top, w=photo_mm, h=photo_mm)
-    x = pdf.l_margin + photo_mm + 6
+    if INCLUDE_PHOTO:
+        photo_mm = PHOTO_INCHES * 25.4
+        pdf.image(str(OUT_PHOTO_JPEG), x=pdf.l_margin, y=top, w=photo_mm, h=photo_mm)
+        x = pdf.l_margin + photo_mm + 6
+    else:
+        photo_mm = 0.0
+        x = pdf.l_margin
     w = pdf.w - pdf.r_margin - x
-    pdf.set_xy(x, top + 2)
+    pdf.set_xy(x, top + (2 if INCLUDE_PHOTO else 0))
     pdf.set_font("Helvetica", "B", 18)
     pdf.cell(w, 8, pdf_safe(NAME), new_x="LEFT", new_y="NEXT")
     pdf.set_font("Helvetica", "", 11.5)
@@ -292,7 +298,7 @@ def build_pdf(variant: dict) -> Path:
         pdf.set_font("Helvetica", "", 9.3)
         pdf.multi_cell(pdf.epw - lw, 4.1, pdf_safe(items), align="L")
 
-    pdf.heading("Experience")
+    pdf.heading("Work Experience")
     for i, job in enumerate(jobs_for(variant)):
         if i:
             pdf.ln(1.4)
