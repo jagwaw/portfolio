@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Generate public/XCResume-vue-frontend.docx (editable) and XCResume-vue-frontend.pdf (download)."""
+"""Generate both resume variants into public/ as .docx (editable) and .pdf (download).
+
+  frontend  -> XCResume-vue-frontend.{docx,pdf}   (kept at the old URL so links already sent keep working)
+  fullstack -> XCResume-fullstack.{docx,pdf}
+
+Edit the CONTENT section below, then run:  npm run resume
+"""
 
 from __future__ import annotations
 
@@ -9,123 +15,142 @@ from pathlib import Path
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 from fpdf import FPDF
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_SOURCE = ROOT / "assets" / "img" / "xc.jpg"
-PHOTO_INCHES = 2
-# Face framing for xc.jpg when re-cropping from source (slightly right in frame)
+PUBLIC = ROOT / "public"
+OUT_PHOTO_JPEG = PUBLIC / "images" / "xc-resume-2x2.jpg"
+PHOTO_INCHES = 1.1
 PHOTO_ORIGIN_X = 0.47
 PHOTO_ORIGIN_Y = 0.40
-OUT_DOCX = ROOT / "public" / "XCResume-vue-frontend.docx"
-OUT_PDF = ROOT / "public" / "XCResume-vue-frontend.pdf"
-OUT_PHOTO_JPEG = ROOT / "public" / "images" / "xc-resume-2x2.jpg"
 
+# --------------------------------------------------------------------------- CONTENT
+
+NAME = "Exiequielle John Frias (XC)"
 CONTACT_LINE = (
-    "Manila, Philippines  |  frias.exiequiellejohn@gmail.com  |  "
+    "Manila, Philippines  |  frias.exiequiellejohn@gmail.com  |  xcworks.vercel.app  |  "
     "linkedin.com/in/exiequielle-john  |  github.com/jagwaw"
 )
 
-SUMMARY = (
-    "Vue.js developer with 8+ years building responsive, production-grade web applications "
-    "for fintech and SaaS products serving thousands of daily users. Deep experience with "
-    "Vue, Vuex, Vue Router, TypeScript, SCSS, and Webpack-based builds. Comfortable owning "
-    "features from user stories through peer review, real-time UI, performance tuning, and "
-    "production support."
-)
+BILLEASE = {
+    "company": "BillEase",
+    "role": "Software Engineer",
+    "dates": "Feb 2024 - Present",
+    "context": "Consumer lending and payments app for a Philippine fintech. Nuxt, Vue, TypeScript, Vuex, Tailwind, Python.",
+}
+BILLEASE_BULLETS = {
+    "core": "Core contributor to the consumer lending web app: 3,400+ commits across KYC onboarding, payments, and credit products.",
+    "liveness": "Replaced a third-party biometric liveness vendor with an in-house detection pipeline (face detection, pose gating, remotely tunable thresholds), removing a per-verification vendor cost.",
+    "credit": "Led the frontend build of a new Credit Line product: activation, funding-source selection, OTP-gated payments, statements, and deep-link entry points across four purchase flows.",
+    "recovery": "Redesigned Account Recovery end to end, adding invisible bot protection with a fallback challenge and security telemetry.",
+    "tokens": "Drove the migration from an ad-hoc color palette to a Figma-driven design-token system (TypeScript -> CSS variables -> Tailwind), ending years of style drift.",
+    "refresh": "Owned the design refresh across payments, notifications, e-wallet, auto-renew, and Pay Now.",
+    "compression": "Built client-side image compression for KYC uploads so large phone photos no longer fail, with a legibility floor that keeps documents readable for reviewers.",
+    "spec": "Introduced the team's change-spec practice (proposal, task checklist, and implementation record per feature), now the standard for new work.",
+    "python": "Maintain production Python/Django REST APIs: bug fixes, endpoint improvements, and business analytics events across sign-up, bills, cash loan, promo, and credit line.",
+}
 
-SKILLS: list[tuple[str, str]] = [
-    (
-        "Frontend",
-        "Vue.js, Vuex, Vue Router, Vuetify, Nuxt.js 2 & 3, TypeScript, JavaScript (ES6+), "
-        "SCSS/SASS, Webpack, Firebase, Tailwind CSS, responsive UI, WebSocket, PWA, GSAP",
-    ),
-    (
-        "Practices",
-        "Agile ceremonies, peer code review, user-story delivery, UX-focused iteration, "
-        "production incident response, mentoring junior developers",
-    ),
-    (
-        "Tools",
-        "Git, Figma, Postman, JIRA, Confluence, Bitbucket, ClickUp, Cursor, Claude, ChatGPT",
-    ),
-    (
-        "Backend familiarity",
-        "Python, Django REST Framework, Django Channels, Redis, Celery, REST APIs, PostgreSQL",
-    ),
-]
+PENBROTHERS = {
+    "company": "Penbrothers (Client: Gamesys / Bally's)",
+    "role": "Frontend Developer",
+    "dates": "Oct 2021 - Jan 2024",
+    "context": "Customer-facing websites for a global online gaming company, with European and US teams.",
+    "bullets": [
+        "Built and maintained responsive, mobile-first interfaces for high-traffic gaming sites.",
+        "Owned technical SEO: fixed site speed, mobile responsiveness, and crawlability issues, and reported SEO performance to the team.",
+        "Set up Google Analytics and Dynatrace, built KPI dashboards, and shipped fixes for bottlenecks found in real-user data.",
+        "Analyzed A/B test results to recommend improvements; wrote unit tests and took part in code reviews across time zones.",
+    ],
+}
 
-JOBS: list[dict] = [
-    {
-        "header": "Billlease — Full Stack Developer (Vue/Nuxt focus)",
-        "dates": "Feb 2024 – Present",
-        "bullets": [
-            "Ship responsive Vue/Nuxt + Vuetify interfaces for Billlease fintech flows used by thousands of daily end-users",
-            "Refactored Vuex state for sign-up, account recovery, and verification journeys",
-            "Built real-time Chat Notification UI and verification flows with WebSocket-backed updates",
-            "Integrate Firebase (App Check, client SDK) in production Billlease Nuxt applications",
-            "Partnered with product owners on user stories, grooming, demos, and peer code reviews",
-            "Diagnosed and resolved production UI issues across mobile and desktop breakpoints",
-            "Delivered Bills Upload AI UI, Pay Now Installments UI, FOMO, and Mobile Load Promo features",
+NARRASOFT = {
+    "company": "NarraSoft (Client: Panoply.io)",
+    "role": "Python Developer",
+    "dates": "May 2021 - Oct 2021",
+    "context": "Cloud data warehouse platform.",
+    "bullets": [
+        "Fixed bugs and improved existing features across the platform's Python codebase.",
+        "Debugged and maintained data source integrations pulling from third-party providers.",
+    ],
+}
+
+REMOTE_STAFF = {
+    "company": "Remote Staff",
+    "role": "Junior Full-Stack Developer",
+    "dates": "Jul 2018 - May 2021",
+    "context": "Internal products for a remote staffing company, working directly with the business team and Australian clients.",
+    "bullets": [
+        "Built Remote Classroom end to end: a pandemic-era platform for schools with student activity tracking, screen capture, time tracking, and task management.",
+        "Designed and built its REST APIs in Flask with PostgreSQL and SQLAlchemy.",
+        "Migrated a legacy Python 2.7 API to Python 3.7, rebuilding it on FastAPI.",
+        "Rebuilt the client-facing candidate page (v2) and built the company's pricing page.",
+    ],
+}
+
+EDUCATION = ("Bachelor of Science in Information Technology", "Lyceum of the Philippines University - Manila  |  2014 - 2018")
+CERTS = "LinkedIn Learning: React.js Essential Training; React.js: Building an Interface"
+
+VARIANTS: dict[str, dict] = {
+    "frontend": {
+        "file": "XCResume-vue-frontend",
+        "title": "AI-Native Frontend Engineer  |  Vue, Nuxt, TypeScript",
+        "summary": (
+            "Frontend-leaning engineer with 8+ years shipping production web apps. At BillEase, a Philippine "
+            "fintech, I build KYC, payments, and credit products in Vue/Nuxt and TypeScript: I replaced a "
+            "biometric vendor with an in-house liveness pipeline, led the frontend of a new credit line product, "
+            "and drove a Figma-driven design-token migration. I build with Claude Code, Cursor, and MCP every day, "
+            "and I'm comfortable in Python APIs when a feature spans the stack."
+        ),
+        "skills": [
+            ("Frontend", "Vue.js, Nuxt.js 2 & 3, TypeScript, JavaScript (ES6+), Vuex, Vue Router, Tailwind CSS, SCSS, Vuetify, Firebase, WebSocket, React"),
+            ("AI-assisted dev", "Claude Code, Cursor, MCP (Figma, ClickUp), spec-driven agentic workflows"),
+            ("Web performance", "Technical SEO, Core Web Vitals, Google Analytics, Dynatrace, A/B testing"),
+            ("Backend", "Python, Django REST Framework, FastAPI, Flask, PostgreSQL, REST APIs"),
+            ("Tools", "Git, GitLab CI, Docker, Figma, Postman, JIRA, ClickUp"),
         ],
+        "billease": ["core", "liveness", "credit", "recovery", "tokens", "refresh", "compression", "spec"],
     },
-    {
-        "header": "Penbrothers (Client: Gamesys / Bally's) — Frontend Developer",
-        "dates": "Oct 2021 – Jan 2024",
-        "bullets": [
-            "Maintained and improved client-facing websites for a global gaming company",
-            "Designed and implemented mobile-first, performance-conscious UI features",
-            "Collaborated with European and American stakeholders on requirements and frontend delivery",
-            "Participated in sprint planning, reviews, and cross-timezone communication",
+    "fullstack": {
+        "file": "XCResume-fullstack",
+        "title": "Full-Stack Engineer  |  Vue/Nuxt + Python",
+        "summary": (
+            "Full-stack engineer with 8+ years across Vue/Nuxt frontends and Python backends. I've written Python "
+            "professionally since 2018: Flask and PostgreSQL APIs, a Python 2.7 to 3.7 migration onto FastAPI, and "
+            "production Django REST APIs at BillEase, a Philippine fintech, where I also build KYC, payments, and "
+            "credit products end to end. I build with Claude Code, Cursor, and MCP every day."
+        ),
+        "skills": [
+            ("Backend", "Python, Django REST Framework, Django, FastAPI, Flask, SQLAlchemy, REST APIs"),
+            ("Frontend", "Vue.js, Nuxt.js, TypeScript, Vuex, Tailwind CSS, Firebase, WebSocket, React"),
+            ("Data & infra", "PostgreSQL, MySQL, Redis, Docker, Nginx, AWS, GitLab CI, Linux"),
+            ("AI-assisted dev", "Claude Code, Cursor, MCP (Figma, ClickUp), spec-driven agentic workflows"),
         ],
+        "billease": ["core", "python", "liveness", "credit", "recovery", "tokens", "spec"],
     },
-    {
-        "header": "Narrasoft (Client: Panoply.io) — Python Developer",
-        "dates": "May 2021 – Oct 2021",
-        "bullets": [
-            "Worked on a cloud-based data warehouse platform for an Asia-based client team",
-            "Created and modified data source integrations from multiple providers",
-            "Collaborated with stakeholders on requirements, delivery, and technical decisions",
-        ],
-    },
-    {
-        "header": "Remote Staff — Junior Full-Stack Developer",
-        "dates": "Jul 2018 – May 2021",
-        "bullets": [
-            "Built a remote classroom platform with real-time activity tracking for teachers and students",
-            "Developed project and task management UIs for clients, staff, teachers, and students",
-            "Delivered AngularJS + Python apps; collaborated with Australian clients on remote product work",
-        ],
-    },
-]
+}
+
+# --------------------------------------------------------------------------- RENDERING
+
+ACCENT = (76, 29, 149)  # deep violet, matches the site
+
+
+def jobs_for(variant: dict) -> list[dict]:
+    billease = dict(BILLEASE, bullets=[BILLEASE_BULLETS[k] for k in variant["billease"]])
+    return [billease, PENBROTHERS, NARRASOFT, REMOTE_STAFF]
 
 
 def crop_profile_photo() -> bytes:
-    """2x2 square from assets/img/xc.jpg (already square); resize for 2in @ 300 DPI print."""
-    if not PROFILE_SOURCE.is_file():
-        raise FileNotFoundError(f"Profile photo not found: {PROFILE_SOURCE}")
-
     img = Image.open(PROFILE_SOURCE).convert("RGB")
-    width, height = img.size
-
-    if width == height:
-        square = img
-    else:
-        side = min(width, height)
-        cx = width * PHOTO_ORIGIN_X
-        cy = height * PHOTO_ORIGIN_Y
-        left = max(0, min(cx - side / 2, width - side))
-        top = max(0, min(cy - side / 2, height - side))
-        square = img.crop((int(left), int(top), int(left + side), int(top + side)))
-
-    px = int(PHOTO_INCHES * 300)
-    square = square.resize((px, px), Image.Resampling.LANCZOS)
-
+    w, h = img.size
+    side = min(w, h)
+    left = max(0, min(w * PHOTO_ORIGIN_X - side / 2, w - side))
+    top = max(0, min(h * PHOTO_ORIGIN_Y - side / 2, h - side))
+    square = img.crop((int(left), int(top), int(left + side), int(top + side))).resize((600, 600), Image.Resampling.LANCZOS)
     OUT_PHOTO_JPEG.parent.mkdir(parents=True, exist_ok=True)
     square.save(OUT_PHOTO_JPEG, format="JPEG", quality=92, optimize=True)
-
     buf = io.BytesIO()
     square.save(buf, format="JPEG", quality=92, optimize=True)
     return buf.getvalue()
@@ -133,162 +158,176 @@ def crop_profile_photo() -> bytes:
 
 def pdf_safe(text: str) -> str:
     return (
-        text.replace("\u2014", "-")
-        .replace("\u2013", "-")
-        .replace("\u2019", "'")
-        .encode("latin-1", "replace")
-        .decode("latin-1")
+        text.replace("—", "-").replace("–", "-").replace("’", "'")
+        .replace("→", "->").replace("·", "|")
+        .encode("latin-1", "replace").decode("latin-1")
     )
 
 
-def add_heading_docx(doc: Document, text: str) -> None:
+# ---- DOCX
+
+def docx_heading(doc: Document, text: str) -> None:
     p = doc.add_paragraph()
-    run = p.add_run(text.upper())
-    run.bold = True
-    run.font.size = Pt(11)
-    p.paragraph_format.space_before = Pt(10)
-    p.paragraph_format.space_after = Pt(4)
+    r = p.add_run(text.upper())
+    r.bold = True
+    r.font.size = Pt(10.5)
+    r.font.color.rgb = RGBColor(*ACCENT)
+    p.paragraph_format.space_before = Pt(8)
+    p.paragraph_format.space_after = Pt(2)
 
 
-def add_bullets_docx(doc: Document, items: list[str]) -> None:
-    for item in items:
-        doc.add_paragraph(item, style="List Bullet")
-
-
-def build_docx(photo_jpeg: bytes) -> None:
+def build_docx(variant: dict, photo: bytes) -> Path:
     doc = Document()
-    photo_stream = io.BytesIO(photo_jpeg)
+    for s in doc.sections:
+        s.left_margin = s.right_margin = Inches(0.7)
+        s.top_margin = s.bottom_margin = Inches(0.6)
+    style = doc.styles["Normal"]
+    style.font.name = "Calibri"
+    style.font.size = Pt(10)
+    style.paragraph_format.space_after = Pt(1)
 
-    photo_para = doc.add_paragraph()
-    photo_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    photo_para.add_run().add_picture(
-        photo_stream,
-        width=Inches(PHOTO_INCHES),
-        height=Inches(PHOTO_INCHES),
-    )
+    table = doc.add_table(rows=1, cols=2)
+    left, right = table.rows[0].cells
+    left.width, right.width = Inches(1.3), Inches(5.8)
+    left.paragraphs[0].add_run().add_picture(io.BytesIO(photo), width=Inches(PHOTO_INCHES))
+    n = right.paragraphs[0].add_run(NAME)
+    n.bold, n.font.size = True, Pt(18)
+    t = right.add_paragraph().add_run(variant["title"])
+    t.font.size, t.font.color.rgb = Pt(11.5), RGBColor(*ACCENT)
+    right.add_paragraph().add_run(CONTACT_LINE).font.size = Pt(9)
 
-    name = doc.add_paragraph()
-    name_run = name.add_run("Exiequielle John Frias (XC)")
-    name_run.bold = True
-    name_run.font.size = Pt(16)
-    name.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    docx_heading(doc, "Summary")
+    doc.add_paragraph(variant["summary"])
 
-    title = doc.add_paragraph()
-    title_run = title.add_run("Vue.js Developer")
-    title_run.font.size = Pt(12)
-    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    contact = doc.add_paragraph()
-    contact.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    contact.add_run(CONTACT_LINE).font.size = Pt(10)
-
-    doc.add_paragraph()
-
-    add_heading_docx(doc, "Summary")
-    doc.add_paragraph(SUMMARY)
-
-    add_heading_docx(doc, "Technical Skills")
-    for label, items in SKILLS:
+    docx_heading(doc, "Skills")
+    for label, items in variant["skills"]:
         p = doc.add_paragraph()
         p.add_run(f"{label}: ").bold = True
         p.add_run(items)
 
-    add_heading_docx(doc, "Professional Experience")
-    for job in JOBS:
-        h = doc.add_paragraph()
-        h.add_run(job["header"]).bold = True
-        d = doc.add_paragraph(job["dates"])
-        d.paragraph_format.space_after = Pt(2)
-        add_bullets_docx(doc, job["bullets"])
+    docx_heading(doc, "Experience")
+    for job in jobs_for(variant):
+        p = doc.add_paragraph()
+        p.paragraph_format.space_before = Pt(5)
+        p.add_run(f"{job['role']}  |  {job['company']}").bold = True
+        p.add_run(f"    {job['dates']}").italic = True
+        c = doc.add_paragraph().add_run(job["context"])
+        c.italic, c.font.size = True, Pt(9)
+        for b in job["bullets"]:
+            bp = doc.add_paragraph(b, style="List Bullet")
+            bp.paragraph_format.space_after = Pt(1)
 
-    add_heading_docx(doc, "Education")
-    edu = doc.add_paragraph()
-    edu.add_run("Bachelor of Science in Information Technology").bold = True
-    doc.add_paragraph("Lyceum of the Philippines University — Manila  |  2014 – 2018")
+    docx_heading(doc, "Education & Certifications")
+    p = doc.add_paragraph()
+    p.add_run(EDUCATION[0]).bold = True
+    p.add_run(f"  |  {EDUCATION[1]}")
+    doc.add_paragraph(CERTS)
 
-    OUT_DOCX.parent.mkdir(parents=True, exist_ok=True)
-    doc.save(OUT_DOCX)
-    print(f"Wrote {OUT_DOCX}")
+    out = PUBLIC / f"{variant['file']}.docx"
+    doc.save(out)
+    return out
 
+
+# ---- PDF
 
 class ResumePDF(FPDF):
     def __init__(self) -> None:
-        super().__init__()
-        self.set_auto_page_break(auto=True, margin=14)
-        self.set_margins(18, 14, 18)
+        super().__init__(format="A4")
+        self.set_auto_page_break(auto=True, margin=12)
+        self.set_margins(16, 12, 16)
 
-    def section_heading(self, text: str) -> None:
-        self.ln(4)
+    def heading(self, text: str) -> None:
+        self.ln(2.2)
         self.set_font("Helvetica", "B", 10)
-        self.multi_cell(0, 5, pdf_safe(text.upper()))
-        self.ln(1)
+        self.set_text_color(*ACCENT)
+        self.cell(0, 5, pdf_safe(text.upper()), new_x="LMARGIN", new_y="NEXT")
+        self.set_draw_color(*ACCENT)
+        self.line(self.l_margin, self.get_y(), self.w - self.r_margin, self.get_y())
+        self.set_text_color(20, 20, 20)
+        self.ln(1.5)
 
-    def body_text(self, text: str, bold: bool = False) -> None:
+    def para(self, text: str, size: float = 9.5, style: str = "", h: float = 4.1) -> None:
         self.set_x(self.l_margin)
-        self.set_font("Helvetica", "B" if bold else "", 10)
-        self.multi_cell(self.epw, 4.5, pdf_safe(text))
+        self.set_font("Helvetica", style, size)
+        self.multi_cell(self.epw, h, pdf_safe(text), align="L")
 
     def bullet(self, text: str) -> None:
-        self.set_font("Helvetica", "", 9)
-        self.set_x(self.l_margin + 4)
-        self.multi_cell(self.epw - 4, 4.2, pdf_safe(f"- {text}"))
+        self.set_font("Helvetica", "", 9.2)
+        y = self.get_y()
+        self.set_xy(self.l_margin + 1.5, y)
+        self.cell(3, 3.95, "-")
+        self.set_xy(self.l_margin + 4.5, y)
+        self.multi_cell(self.epw - 4.5, 3.95, pdf_safe(text), align="L")
 
 
-def build_pdf(photo_jpeg: bytes) -> None:
+def build_pdf(variant: dict) -> Path:
     pdf = ResumePDF()
     pdf.add_page()
-
     photo_mm = PHOTO_INCHES * 25.4
-    photo_x = (pdf.w - photo_mm) / 2
-    photo_y = pdf.t_margin
-    pdf.image(str(OUT_PHOTO_JPEG), x=photo_x, y=photo_y, w=photo_mm, h=photo_mm)
+    top = pdf.t_margin
+    pdf.image(str(OUT_PHOTO_JPEG), x=pdf.l_margin, y=top, w=photo_mm, h=photo_mm)
+    x = pdf.l_margin + photo_mm + 6
+    w = pdf.w - pdf.r_margin - x
+    pdf.set_xy(x, top + 2)
+    pdf.set_font("Helvetica", "B", 18)
+    pdf.cell(w, 8, pdf_safe(NAME), new_x="LEFT", new_y="NEXT")
+    pdf.set_font("Helvetica", "", 11.5)
+    pdf.set_text_color(*ACCENT)
+    pdf.cell(w, 6.5, pdf_safe(variant["title"]), new_x="LEFT", new_y="NEXT")
+    pdf.set_text_color(60, 60, 60)
+    pdf.set_font("Helvetica", "", 8.6)
+    pdf.multi_cell(w, 4.2, pdf_safe(CONTACT_LINE), align="L")
+    pdf.set_text_color(20, 20, 20)
+    pdf.set_y(max(pdf.get_y(), top + photo_mm) + 1)
 
-    pdf.set_y(photo_y + photo_mm + 4)
-    pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 8, pdf_safe("Exiequielle John Frias (XC)"), align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "", 12)
-    pdf.cell(0, 6, pdf_safe("Vue.js Developer"), align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "", 9)
-    pdf.multi_cell(0, 4, pdf_safe(CONTACT_LINE), align="C")
-    pdf.ln(4)
+    pdf.heading("Summary")
+    pdf.para(variant["summary"])
 
-    pdf.section_heading("Summary")
-    pdf.body_text(SUMMARY)
+    pdf.heading("Skills")
+    for label, items in variant["skills"]:
+        pdf.set_x(pdf.l_margin)
+        pdf.set_font("Helvetica", "B", 9.3)
+        lw = pdf.get_string_width(pdf_safe(f"{label}: ")) + 1
+        pdf.cell(lw, 4.1, pdf_safe(f"{label}: "), new_x="END")
+        pdf.set_font("Helvetica", "", 9.3)
+        pdf.multi_cell(pdf.epw - lw, 4.1, pdf_safe(items), align="L")
 
-    pdf.section_heading("Technical Skills")
-    for label, items in SKILLS:
+    pdf.heading("Experience")
+    for i, job in enumerate(jobs_for(variant)):
+        if i:
+            pdf.ln(1.4)
         pdf.set_x(pdf.l_margin)
         pdf.set_font("Helvetica", "B", 10)
-        label_w = pdf.get_string_width(pdf_safe(f"{label}: ")) + 1
-        pdf.cell(label_w, 4.5, pdf_safe(f"{label}: "), new_x="END")
-        pdf.set_font("Helvetica", "", 10)
-        pdf.multi_cell(pdf.epw - label_w, 4.5, pdf_safe(items))
-
-    pdf.section_heading("Professional Experience")
-    for job in JOBS:
-        pdf.ln(1)
-        pdf.body_text(job["header"], bold=True)
-        pdf.set_x(pdf.l_margin)
+        head = pdf_safe(f"{job['role']}  |  {job['company']}")
+        pdf.cell(pdf.epw - 40, 5, head)
         pdf.set_font("Helvetica", "I", 9)
-        pdf.multi_cell(pdf.epw, 4, pdf_safe(job["dates"]))
-        for bullet in job["bullets"]:
-            pdf.bullet(bullet)
+        pdf.cell(40, 5, pdf_safe(job["dates"]), align="R", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_text_color(90, 90, 90)
+        pdf.para(job["context"], size=8.6, style="I", h=4)
+        pdf.set_text_color(20, 20, 20)
+        for b in job["bullets"]:
+            pdf.bullet(b)
 
-    pdf.section_heading("Education")
-    pdf.body_text("Bachelor of Science in Information Technology", bold=True)
-    pdf.body_text("Lyceum of the Philippines University — Manila  |  2014 – 2018")
+    pdf.heading("Education & Certifications")
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", "B", 9.5)
+    ew = pdf.get_string_width(pdf_safe(EDUCATION[0])) + 1
+    pdf.cell(ew, 4.5, pdf_safe(EDUCATION[0]), new_x="END")
+    pdf.set_font("Helvetica", "", 9.5)
+    pdf.cell(0, 4.5, pdf_safe(f"  |  {EDUCATION[1]}"), new_x="LMARGIN", new_y="NEXT")
+    pdf.para(CERTS, size=9)
 
-    OUT_PDF.parent.mkdir(parents=True, exist_ok=True)
-    pdf.output(str(OUT_PDF))
-    print(f"Wrote {OUT_PDF}")
-    print(f"Photo: {OUT_PHOTO_JPEG}")
-    print("If Preview still looks old: quit Preview, then reopen this PDF.")
+    out = PUBLIC / f"{variant['file']}.pdf"
+    pdf.output(str(out))
+    return out
 
 
 def main() -> None:
-    photo_jpeg = crop_profile_photo()
-    build_docx(photo_jpeg)
-    build_pdf(photo_jpeg)
+    photo = crop_profile_photo()
+    for key, variant in VARIANTS.items():
+        d = build_docx(variant, photo)
+        p = build_pdf(variant)
+        print(f"[{key}] wrote {d.name} and {p.name}")
 
 
 if __name__ == "__main__":

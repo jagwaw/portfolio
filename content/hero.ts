@@ -5,11 +5,11 @@ export const hero: HeroContent = {
   greeting: "Hi, I'm ",
   nickname: 'XC.',
   typewriterPrefix: 'I build as a ',
-  roles: ['Vue.js Developer', 'Vuex & TypeScript Engineer', 'Real-time UI Builder', 'SaaS Product Developer'],
+  roles: ['Frontend Engineer', 'Vue & Nuxt Specialist', 'Full-Stack Builder', 'AI-Native Developer'],
   bio: {
     location: 'Manila, Philippines',
     body:
-      'At Billlease, I build responsive Vue and Vuetify interfaces with Firebase-backed production apps — from user stories and peer review through real-time UI, performance tuning, and production support.',
+      'At BillEase, I ship customer-facing Vue/Nuxt + TypeScript flows for KYC, payments, and credit products — and I build with Claude Code, Cursor, and MCP every day.',
   },
   ctas: {
     viewWork: 'View My Work',

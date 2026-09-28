@@ -45,7 +45,7 @@ export const contact: ContactContent = {
     line3: 'Round-trip: always fast 🚀',
   },
   footer: {
-    copyright: '© 2025 XC. Built with Nuxt 3 & ☕',
+    copyright: '© 2026 XC. Built with Nuxt 3 & ☕',
     credit: 'Designed & developed by Exiequielle John Frias',
   },
 }

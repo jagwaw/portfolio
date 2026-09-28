@@ -3,7 +3,7 @@ import type { NavItem, Person, SiteLinks, SiteSeo } from '~/types/content'
 export const person: Person = {
   fullName: 'Exiequielle John Frias',
   nickname: 'XC',
-  title: 'Vue.js Developer',
+  title: 'AI-Native Frontend Engineer',
   location: 'Manila, Philippines',
   locationFlag: '🇵🇭',
 }
@@ -13,16 +13,16 @@ export const links: SiteLinks = {
   github: 'https://github.com/jagwaw',
   githubPortfolio: 'https://github.com/jagwaw/portfolio',
   linkedin: 'https://www.linkedin.com/in/exiequielle-john/',
-  resumeUrl: '/XCResume-vue-frontend.pdf?v=3',
+  resumeUrl: '/XCResume-vue-frontend.pdf?v=4',
 }
 
 export const seo: SiteSeo = {
-  title: 'XC — Vue.js Developer',
+  title: 'Exiequielle John Frias (XC) — AI-Native Frontend Engineer',
   description:
-    'Exiequielle John Frias (XC) — Vue.js Developer in Manila, Philippines. Building responsive SaaS interfaces with Vue, Vuex, Vuetify, TypeScript, Firebase, and real-time production apps.',
-  ogTitle: 'XC — Vue.js Developer',
+    'Exiequielle John Frias (XC) — frontend-leaning full-stack engineer in Manila with 8+ years shipping production web apps. Vue, Nuxt, TypeScript, Tailwind, and Python APIs, built with Claude Code, Cursor, and MCP.',
+  ogTitle: 'XC — AI-Native Frontend Engineer',
   ogDescription:
-    'Vue.js Developer shipping responsive product UIs with Vuex, Vuetify, Firebase, real-time features, and production support for high-traffic web applications.',
+    'Vue/Nuxt + TypeScript engineer at BillEase shipping KYC, payments, and credit products. Python APIs on the side, AI-assisted workflow by default.',
   themeColor: '#0a0a0f',
 }
 

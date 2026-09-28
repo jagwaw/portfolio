@@ -44,7 +44,7 @@ const imageSrc = computed(
   () => `/images/projects/${props.id}.${extensions[extensionIndex.value]}`,
 )
 
-const fallbackLabel = 'Add thumbnail at public/images/projects/{id}.jpg'
+const fallbackLabel = computed(() => props.name)
 
 watch(
   () => props.id,
