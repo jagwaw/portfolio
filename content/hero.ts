@@ -20,7 +20,7 @@ export const hero: HeroContent = {
   stats: [
     { value: '8+', label: 'Years Experience' },
     { value: '4', label: 'Companies' },
-    { value: '10+', label: 'Projects Shipped' },
+    { value: '3,400+', label: 'Commits at BillEase' },
   ],
   availability: 'Available for opportunities',
   scrollHint: 'scroll',

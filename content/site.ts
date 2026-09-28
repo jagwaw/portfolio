@@ -24,6 +24,8 @@ export const seo: SiteSeo = {
   ogDescription:
     'Vue/Nuxt + TypeScript engineer at BillEase shipping KYC, payments, and credit products. Python APIs on the side, AI-assisted workflow by default.',
   themeColor: '#0a0a0f',
+  url: 'https://xcworks.vercel.app',
+  ogImage: '/images/xc-resume-2x2.jpg',
 }
 
 export const nav: NavItem[] = [

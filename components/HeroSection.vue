@@ -32,7 +32,7 @@
         </div>
 
         <p ref="bio" class="font-body text-slate-400 text-lg leading-relaxed max-w-xl mb-10 opacity-0">
-          {{ person.title }} based in
+          <span class="text-slate-200 font-medium">{{ person.fullName }}</span>, {{ person.title }} based in
           <span class="text-violet-300 font-medium">{{ hero.bio.location }}</span>.
           {{ hero.bio.body }}
         </p>
@@ -42,12 +42,14 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
             {{ hero.ctas.viewWork }}
           </button>
+          <a :href="links.resumeUrl" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-hover>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M6 20h12a2 2 0 002-2V8.414a1 1 0 00-.293-.707l-4.414-4.414A1 1 0 0014.586 3H6a2 2 0 00-2 2v13a2 2 0 002 2z" /></svg>
+            {{ hero.ctas.resume }}
+          </a>
           <button class="btn-ghost" data-hover @click="scrollTo('contact')">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             {{ hero.ctas.contact }}
           </button>
-          <a :href="links.resumeUrl" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-hover>{{ hero.ctas.resume }}</a>
-          <a :href="links.githubPortfolio" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-hover>{{ hero.ctas.source }}</a>
         </div>
 
         <div ref="statsRow" class="flex flex-wrap gap-8 mt-16 opacity-0">
@@ -154,10 +156,17 @@ const initParticles = (canvas: HTMLCanvasElement) => {
 }
 
 onMounted(async () => {
-  if (particleCanvas.value) initParticles(particleCanvas.value)
   await nextTick()
-
   const { gsap } = await import('gsap')
+
+  // Respect reduced-motion: show everything at once, no particles, no typing loop
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.set([promptLine.value, heading.value, subtitle.value, bio.value, ctaRow.value, statsRow.value], { opacity: 1, y: 0 })
+    displayedRole.value = roles[0]
+    return
+  }
+
+  if (particleCanvas.value) initParticles(particleCanvas.value)
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
   tl.to(promptLine.value, { opacity: 1, y: 0, duration: 0.5 })
     .to(heading.value, { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')

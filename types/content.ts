@@ -16,6 +16,8 @@ export interface SiteSeo {
   ogTitle: string
   ogDescription: string
   themeColor: string
+  url: string
+  ogImage: string
 }
 
 export interface NavItem {
