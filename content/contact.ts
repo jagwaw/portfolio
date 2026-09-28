@@ -4,16 +4,15 @@ export const contact: ContactContent = {
   section: {
     index: '05 / Contact',
     title: "Let's work together",
-    description: "Have a project in mind, or just want to connect? Drop a message — I'll get back to you.",
+    description: "Hiring, have a project, or just want to connect? Email me directly or use the form below.",
   },
   form: {
     filename: 'new-message.send',
     fields: { name: '// name', email: '// email', message: '// message' },
     placeholders: { name: 'Your name', email: 'you@example.com', message: "What's on your mind?" },
-    submit: 'Send Message',
-    sending: 'Sending...',
-    sent: 'Message Sent!',
-    successNote: "✓ Thanks! I'll reply as soon as possible.",
+    submit: 'Send via Email',
+    errorMissing: 'Please fill in your name, email, and message.',
+    successNote: 'Your email app should open with the message ready — just hit send.',
   },
   direct: {
     title: 'Get in touch directly',

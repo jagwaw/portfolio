@@ -9,16 +9,16 @@
       <h2 ref="title" class="section-heading font-display text-4xl md:text-5xl font-bold text-white mb-16 gsap-hidden">
         {{ about.section.title }}
       </h2>
-      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div ref="leftCol" class="gsap-hidden flex flex-col items-center md:items-start gap-8">
+      <div class="grid md:grid-cols-5 gap-12 lg:gap-16 items-start">
+        <div ref="leftCol" class="gsap-hidden md:col-span-2 flex flex-col items-center md:items-start gap-8">
           <div class="relative">
-            <div class="w-40 h-40 rounded-2xl overflow-hidden bg-gradient-to-br from-violet-500/20 to-indigo-500/10 border border-violet-500/20 animate-pulse-glow shadow-violet-sm">
+            <div class="w-52 h-52 rounded-2xl overflow-hidden bg-gradient-to-br from-violet-500/20 to-indigo-500/10 border border-violet-500/20 shadow-violet-sm">
               <img
                 :src="profilePhoto"
                 :alt="about.photoAlt"
                 class="w-full h-full object-cover"
-                width="160"
-                height="160"
+                width="208"
+                height="208"
                 loading="lazy"
                 decoding="async"
               />
@@ -29,7 +29,7 @@
           <div class="space-y-3 w-full max-w-xs">
             <div v-for="fact in about.facts" :key="fact.label" class="flex items-center gap-3 text-sm">
               <span class="w-5 h-5 text-violet-400 flex-shrink-0" v-html="factIcons[fact.icon]" />
-              <span class="text-slate-500 font-mono text-xs">{{ fact.label }}:</span>
+              <span class="text-slate-400 font-mono text-xs">{{ fact.label }}:</span>
               <span class="text-slate-300 font-body">{{ fact.value }}</span>
             </div>
           </div>
@@ -42,12 +42,12 @@
             </div>
           </div>
         </div>
-        <div ref="rightCol" class="gsap-hidden space-y-6">
+        <div ref="rightCol" class="gsap-hidden md:col-span-3 space-y-6">
           <p
             v-for="(paragraph, pi) in about.paragraphs"
             :key="pi"
             class="font-body leading-relaxed"
-            :class="pi === 0 ? 'text-slate-300 text-lg' : 'text-slate-400'"
+            :class="pi === 0 ? 'text-slate-200 text-lg' : 'text-slate-300'"
           >
             <ContentSegment v-for="(segment, si) in paragraph" :key="si" :segment="segment" />
           </p>

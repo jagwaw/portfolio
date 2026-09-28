@@ -27,7 +27,7 @@
         </h1>
 
         <div ref="subtitle" class="font-display text-2xl md:text-3xl font-medium text-slate-300 mb-6 opacity-0 min-h-[1.5em]">
-          <span class="text-slate-500">{{ hero.typewriterPrefix }}</span>
+          <span v-if="hero.typewriterPrefix" class="text-slate-500">{{ hero.typewriterPrefix }}</span>
           <span class="text-violet-300 border-r-2 border-violet-400">{{ displayedRole }}</span>
         </div>
 

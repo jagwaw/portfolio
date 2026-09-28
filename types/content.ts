@@ -200,8 +200,7 @@ export interface ContactContent {
     fields: { name: string; email: string; message: string }
     placeholders: { name: string; email: string; message: string }
     submit: string
-    sending: string
-    sent: string
+    errorMissing: string
     successNote: string
   }
   direct: {

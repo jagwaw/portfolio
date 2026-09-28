@@ -4,7 +4,7 @@ export const hero: HeroContent = {
   terminal: { path: '~/portfolio', command: 'node index.js' },
   greeting: "Hi, I'm ",
   nickname: 'XC.',
-  typewriterPrefix: 'I build as a ',
+  typewriterPrefix: '',
   roles: ['Frontend Engineer', 'Vue & Nuxt Specialist', 'Full-Stack Builder', 'AI-Native Developer'],
   bio: {
     location: 'Manila, Philippines',
